@@ -229,7 +229,7 @@ class PlanarVAE(VAE):
     def forward(self, x):
         """
         Forward pass with planar flows for the transformation z_0 -> z_1 -> ... -> z_k.
-        Log determinant is computed as log_det_j = N E_q_z0[\sum_k log |det dz_k/dz_k-1| ].
+        Log determinant is computed as log_det_j = N E_q_z0[\\sum_k log |det dz_k/dz_k-1| ].
         """
 
         self.log_det_j = 0.
@@ -343,7 +343,8 @@ class OrthogonalSylvesterVAE(VAE):
             test = torch.bmm(amat.transpose(2, 1), amat) - self._eye
             norms2 = torch.sum(torch.norm(test, p=2, dim=2) ** 2, dim=1)
             norms = torch.sqrt(norms2)
-            max_norm = torch.max(norms).data[0]
+            #max_norm = torch.max(norms).data[0]
+            max_norm = torch.max(norms).item()
             if max_norm <= self.cond:
                 break
 
@@ -552,7 +553,7 @@ class HouseholderSylvesterVAE(VAE):
     def forward(self, x):
         """
         Forward pass with orthogonal flows for the transformation z_0 -> z_1 -> ... -> z_k.
-        Log determinant is computed as log_det_j = N E_q_z0[\sum_k log |det dz_k/dz_k-1| ].
+        Log determinant is computed as log_det_j = N E_q_z0[\\sum_k log |det dz_k/dz_k-1| ].
         """
 
         self.log_det_j = 0.
@@ -671,7 +672,7 @@ class TriangularSylvesterVAE(VAE):
     def forward(self, x):
         """
         Forward pass with orthogonal flows for the transformation z_0 -> z_1 -> ... -> z_k.
-        Log determinant is computed as log_det_j = N E_q_z0[\sum_k log |det dz_k/dz_k-1| ].
+        Log determinant is computed as log_det_j = N E_q_z0[\\sum_k log |det dz_k/dz_k-1| ].
         """
 
         self.log_det_j = 0.
@@ -736,7 +737,7 @@ class IAFVAE(VAE):
     def forward(self, x):
         """
         Forward pass with inverse autoregressive flows for the transformation z_0 -> z_1 -> ... -> z_k.
-        Log determinant is computed as log_det_j = N E_q_z0[\sum_k log |det dz_k/dz_k-1| ].
+        Log determinant is computed as log_det_j = N E_q_z0[\\sum_k log |det dz_k/dz_k-1| ].
         """
 
         # mean and variance of z
